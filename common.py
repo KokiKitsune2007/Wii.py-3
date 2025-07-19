@@ -1,6 +1,6 @@
 import os, hashlib, struct, subprocess, fnmatch, shutil, urllib, array, time, sys, tempfile, wave
 from binascii import *
-from cStringIO import StringIO
+from io import StringIO
 
 from Crypto.Cipher import AES
 from PIL import Image

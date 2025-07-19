@@ -265,7 +265,7 @@ class CCF:
 			fileEntry.fileSizeDecompressed = os.stat(folder + '/' + fileList[fileNumber]).st_size
 			fileEntry.fileOffset = align(self.fd.tell(), 32) / 32
 			
-			print 'File {0} ({1}Kb) placed at offset 0x{2:X}'.format(fileEntry.fileName, fileEntry.fileSize / 1024, fileEntry.fileOffset * 32)
+			print('File {0} ({1}Kb) placed at offset 0x{2:X}').format(fileEntry.fileName, fileEntry.fileSize / 1024, fileEntry.fileOffset * 32)
 	
 			self.fd.seek(len(fileHdr) + fileNumber * len(self.CCFFile()))
 			self.fd.write(fileEntry.pack())
@@ -279,7 +279,7 @@ class CCF:
 		hdrData = self.fd.read(len(fileHdr))
 		fileHdr.unpack(hdrData)
 		
-		print 'Found {0} file/s and root node at 0x{1:X}'.format(fileHdr.filesCount, fileHdr.rootOffset)
+		print ('Found {0} file/s and root node at 0x{1:X}').format(fileHdr.filesCount, fileHdr.rootOffset)
 		
 		if fileHdr.magic != "\x43\x43\x46\x00":
 			raise ValueError("Wrong magic, 0x{0}".format(fileHdr.magic))
@@ -302,17 +302,17 @@ class CCF:
 			
 			fileEntry.fileOffset = fileEntry.fileOffset * 32
 						
-			print 'File {0} at offset 0x{1:X}'.format(fileEntry.fileName, fileEntry.fileOffset)
-			print 'File size {0}Kb ({1}Kb decompressed)'.format(fileEntry.fileSize / 1024, fileEntry.fileSizeDecompressed / 1024)
+			print('File {0} at offset 0x{1:X}').format(fileEntry.fileName, fileEntry.fileOffset)
+			print('File size {0}Kb ({1}Kb decompressed)').format(fileEntry.fileSize / 1024, fileEntry.fileSizeDecompressed / 1024)
 			
 			output = open(fileEntry.fileName.rstrip('\0'), 'w+b')
 			
 			self.fd.seek(fileEntry.fileOffset)
 			if fileEntry.fileSize == fileEntry.fileSizeDecompressed:
-				print 'The file is stored uncompressed'
+				print('The file is stored uncompressed')
 				output.write(self.fd.read(fileEntry.fileSize))
 			else:
-				print 'The file is stored compressed..decompressing'
+				print('The file is stored compressed..decompressing')
 				decompressedBuffer = zlib.decompress(self.fd.read(fileEntry.fileSize))
 				output.write(decompressedBuffer)
 			output.close()

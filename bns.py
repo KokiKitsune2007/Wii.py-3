@@ -166,7 +166,7 @@ class BNS_info(object):
 			co += 2
 		return co
 	def show(self):
-		print "Magic: %s" % self.magic
+		print("Magic: %s") % self.magic
 		print "Length: %08x" % self.size
 		print "Codec: %02x " % self.codec,
 		if self.codec == 0: print "ADPCM"
